@@ -34,7 +34,7 @@ def query_openai_api(api_endpoint, user_query):
 
     headers = {
         "Content-Type": "application/json",
-        "Authorization": f"Bearer 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",  # Replace YOUR_API_KEY with your actual API key
+        "Authorization": f"Bearer ENTER API KEY",  # Replace YOUR_API_KEY with your actual API key
     }
 
     response = requests.post(api_endpoint, headers=headers, json=chat_query_data)
