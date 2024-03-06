@@ -1,0 +1,8 @@
+Geodesic Distance Formula
+
+def great_circle_distance(lat1, long1, lat2, long2):
+   long_diff = min(abs(long2 - long1), 360 - abs(long2 - long1))
+   lat1, long1, lat2, long2 = map(radians, [lat1, long1, lat2, long2])
+   long_diff = radians(long_diff)
+  distance = round(degrees(acos(sin(lat1) * sin(lat2) + cos(lat1) * cos(lat2) * cos(long_diff))) * 60, 4)
+   return distance
