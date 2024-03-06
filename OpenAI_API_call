@@ -1,0 +1,49 @@
+import requests
+import json
+
+def main():
+    # Define the OpenAI Chat API endpoint
+    api_endpoint = "https://api.openai.com/v1/chat/completions"
+
+    # Loop to handle multiple queries
+    while True:
+        user_query = input("Query? (Type 'exit' to stop): ")
+        if user_query.lower() == 'exit' or user_query == '':
+            print("Exiting...")
+            break
+        query_openai_api(api_endpoint, user_query)
+
+def query_openai_api(api_endpoint, user_query):
+    # Load the supporting data from 'supporting.json'
+    with open('supporting.json', 'r') as file:
+        supporting_data = json.load(file)
+
+    messages = [{"role": "system", "content": "The following is a conversation with an AI assistant."}]
+
+    # Include supporting data from 'supporting.json'
+    for key, value in supporting_data.items():
+        messages.append({"role": "system", "content": f"{key}: {value}"})
+
+    # Append the user query
+    messages.append({"role": "user", "content": user_query})
+
+    chat_query_data = {
+        "model": "gpt-4",  # Ensure correct model is used
+        "messages": messages,
+    }
+
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": f"Bearer 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",  # Replace YOUR_API_KEY with your actual API key
+    }
+
+    response = requests.post(api_endpoint, headers=headers, json=chat_query_data)
+
+    if response.status_code == 200:
+        chat_completion_result = response.json()["choices"][0]["message"]["content"]
+        print("AI:", chat_completion_result)
+    else:
+        print("Error:", response.text)
+
+if __name__ == "__main__":
+    main()
